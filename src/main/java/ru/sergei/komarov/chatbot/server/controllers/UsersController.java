@@ -32,4 +32,9 @@ public class UsersController {
         return usersService.validateCredentials(login, password);
     }
 
+    @PostMapping("/delete/all")
+    public void deleteAll() {
+        usersService.deleteAll();
+    }
+
 }

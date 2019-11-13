@@ -32,6 +32,7 @@ public class FixController {
     @ResponseBody
     public String init() {
 
+        messagesService.deleteAll();
         usersService.deleteAll();
 
         User user = new User();

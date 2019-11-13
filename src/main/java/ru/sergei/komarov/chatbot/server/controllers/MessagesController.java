@@ -91,6 +91,12 @@ public class MessagesController {
         return response;
     }
 
+    @PostMapping("/delete/all")
+    @ResponseBody
+    public void deleteAll() {
+        messagesService.deleteAll();
+    }
+
     private Message parseMessageFromJson(JsonObject jsonMessage) {
         Message message = new Message();
         message.setMessage(jsonMessage.get("message").getAsString());
