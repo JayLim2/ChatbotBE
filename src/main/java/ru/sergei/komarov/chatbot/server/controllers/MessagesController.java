@@ -35,6 +35,11 @@ public class MessagesController {
     @GetMapping("/get/all")
     @ResponseBody
     public List<Map<String, Object>> getAll() {
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Converter.messagesToMap(messagesService.getAll());
     }
 
