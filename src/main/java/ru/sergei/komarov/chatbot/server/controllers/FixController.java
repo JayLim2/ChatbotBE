@@ -28,27 +28,20 @@ public class FixController {
         this.usersService = usersService;
     }
 
-    @GetMapping("/createDummy")
+    @GetMapping("/init")
     @ResponseBody
-    public String createDummy() {
+    public String init() {
 
         usersService.deleteAll();
 
         User user = new User();
-        user.setLogin("SuPeR_megatron777");
+        user.setLogin("USER");
         user.setPassword(HashTool.hash("password"));
-        List<Message> messages = new ArrayList<>();
-        Message message1 = new Message();
-        message1.setMessage("Hello dummy world!");
-        message1.setDate(LocalDateTime.now());
-        message1.setUser(user);
-        Message message2 = new Message();
-        message2.setMessage("BlaBlaCar");
-        message2.setDate(LocalDateTime.now().minusDays(3).minusHours(4).minusMinutes(23));
-        message2.setUser(user);
-        messages.add(message1);
-        messages.add(message2);
-        user.setMessages(messages);
+        usersService.save(user);
+
+        user = new User();
+        user.setLogin("SYSTEM");
+        user.setPassword(HashTool.hash("password"));
         usersService.save(user);
 
         return "Created.";
