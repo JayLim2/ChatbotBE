@@ -51,11 +51,18 @@ public class UsersService {
     }
 
     public boolean validateCredentials(String login, String password) {
-        if (HashTool.isNullOrEmptyString(login) && HashTool.isNullOrEmptyString(password)) {
+        System.out.println("Login: " + login);
+        System.out.println("Password: " + password);
+        System.out.println();
+
+        if (HashTool.isNullOrEmptyString(login) || HashTool.isNullOrEmptyString(password)) {
+            System.out.println("\tNull or empty login or password");
             return false;
         }
 
         String hashedPassword = HashTool.hash(password);
+        System.out.println("hashed: " + hashedPassword);
+
         return usersRepository.existsByLoginAndPassword(login, hashedPassword);
     }
 }
