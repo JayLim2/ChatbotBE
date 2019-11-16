@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.chatbot.server.models.Message;
@@ -18,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/messages")
@@ -36,11 +34,6 @@ public class MessagesController {
     @GetMapping("/get/all")
     @ResponseBody
     public List<Map<String, Object>> getAll() {
-        try {
-            Thread.sleep(1500);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return Converter.messagesToMap(messagesService.getAll());
     }
 
@@ -81,9 +74,9 @@ public class MessagesController {
         }
 
         JsonElement response;
-        if(jsonMessages.size() == newMessagesIds.size()) {
+        if (jsonMessages.size() == newMessagesIds.size()) {
             response = GsonConverter.collectionToJsonArray(newMessagesIds);
-        } else if(newMessagesIds.size() > 0) {
+        } else if (newMessagesIds.size() > 0) {
             response = new JsonPrimitive("PARTLY_FAIL");
         } else {
             response = new JsonPrimitive("FAIL");
