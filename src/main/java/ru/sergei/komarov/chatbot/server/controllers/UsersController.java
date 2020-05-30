@@ -1,5 +1,6 @@
 package ru.sergei.komarov.chatbot.server.controllers;
 
+import com.google.gson.JsonPrimitive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.chatbot.server.models.User;
@@ -28,8 +29,8 @@ public class UsersController {
 
     @PostMapping("/validate/credentials")
     @ResponseBody
-    public boolean validateCredentials(String login, String password) {
-        return usersService.validateCredentials(login, password);
+    public JsonPrimitive validateCredentials(String login, String password) {
+        return new JsonPrimitive(usersService.validateCredentials(login, password));
     }
 
     @PostMapping("/delete/all")
