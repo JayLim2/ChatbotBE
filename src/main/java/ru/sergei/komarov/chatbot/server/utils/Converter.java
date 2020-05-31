@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static ru.sergei.komarov.chatbot.server.utils.Constants.DATE_TIME_FORMATTER;
+
 public class Converter {
 
     public static Map<String, Object> userToMap(User user) {
@@ -40,7 +42,7 @@ public class Converter {
         map.put("id", message.getId());
         map.put("message", message.getMessage());
         map.put("userId", message.getUser().getLogin());
-        map.put("date", DateTimeFormatter.ISO_DATE_TIME.format(message.getDate()));
+        map.put("date", DATE_TIME_FORMATTER.format(message.getDate()));
         return map;
     }
 }

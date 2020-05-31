@@ -13,10 +13,11 @@ import ru.sergei.komarov.chatbot.server.utils.Converter;
 import ru.sergei.komarov.chatbot.server.utils.GsonConverter;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static ru.sergei.komarov.chatbot.server.utils.Constants.DATE_TIME_FORMATTER;
 
 @RestController
 @RequestMapping("/api/messages")
@@ -93,7 +94,8 @@ public class MessagesController {
     private Message parseMessageFromJson(JsonObject jsonMessage) {
         Message message = new Message();
         message.setMessage(jsonMessage.get("message").getAsString());
-        message.setDate(LocalDateTime.parse(jsonMessage.get("date").getAsString(), DateTimeFormatter.ISO_DATE_TIME));
+        String dateStr = jsonMessage.get("date").getAsString();
+        message.setDate(LocalDateTime.parse(dateStr, DATE_TIME_FORMATTER));
         message.setUser(usersService.getByLogin(jsonMessage.get("userId").getAsString()));
         return message;
     }
