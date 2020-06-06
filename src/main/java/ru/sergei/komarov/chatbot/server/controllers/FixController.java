@@ -45,6 +45,11 @@ public class FixController {
         user.setPassword(HashTool.hash("password"));
         usersService.save(user);
 
+        user = new User();
+        user.setLogin("Q");
+        user.setPassword(HashTool.hash("q"));
+        usersService.save(user);
+
         return "Created.";
     }
 }
