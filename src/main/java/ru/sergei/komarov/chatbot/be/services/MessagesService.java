@@ -1,12 +1,11 @@
-package ru.sergei.komarov.chatbot.server.services;
+package ru.sergei.komarov.chatbot.be.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sergei.komarov.chatbot.server.models.Message;
-import ru.sergei.komarov.chatbot.server.models.User;
-import ru.sergei.komarov.chatbot.server.repositories.MessagesRepository;
+import ru.sergei.komarov.chatbot.be.models.Chat;
+import ru.sergei.komarov.chatbot.be.models.Message;
+import ru.sergei.komarov.chatbot.be.repositories.MessagesRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,12 +26,12 @@ public class MessagesService {
         return messagesRepository.findById(id).orElse(null);
     }
 
-    public List<Message> getByUser(User user) {
-        return messagesRepository.findByUser(user);
+    public List<Message> getByChat(Chat chat) {
+        return messagesRepository.findAllByChat(chat);
     }
 
-    public List<Message> getByDateBetween(LocalDateTime from, LocalDateTime to) {
-        return messagesRepository.findByDateBetween(from, to);
+    public void deleteAllByChat(Chat chat) {
+        messagesRepository.deleteAllByChat(chat);
     }
 
     public Message save(Message message) {

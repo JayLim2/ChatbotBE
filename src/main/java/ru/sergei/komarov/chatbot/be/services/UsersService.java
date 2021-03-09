@@ -1,10 +1,10 @@
-package ru.sergei.komarov.chatbot.server.services;
+package ru.sergei.komarov.chatbot.be.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sergei.komarov.chatbot.server.models.User;
-import ru.sergei.komarov.chatbot.server.repositories.UsersRepository;
-import ru.sergei.komarov.chatbot.server.utils.HashTool;
+import ru.sergei.komarov.chatbot.be.models.User;
+import ru.sergei.komarov.chatbot.be.repositories.UsersRepository;
+import ru.sergei.komarov.chatbot.be.utils.HashTool;
 
 import java.util.List;
 
@@ -63,6 +63,6 @@ public class UsersService {
         String hashedPassword = HashTool.hash(password);
         System.out.println("hashed: " + hashedPassword);
 
-        return usersRepository.existsByLoginAndPassword(login, hashedPassword);
+        return usersRepository.existsByLoginAndPasswordHash(login, hashedPassword);
     }
 }

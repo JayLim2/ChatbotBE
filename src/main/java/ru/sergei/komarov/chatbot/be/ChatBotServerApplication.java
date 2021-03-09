@@ -1,4 +1,4 @@
-package ru.sergei.komarov.chatbot.server;
+package ru.sergei.komarov.chatbot.be;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

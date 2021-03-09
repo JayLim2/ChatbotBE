@@ -1,14 +1,11 @@
-package ru.sergei.komarov.chatbot.server.controllers;
+package ru.sergei.komarov.chatbot.be.controllers;
 
-import com.google.gson.JsonPrimitive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.sergei.komarov.chatbot.server.models.User;
-import ru.sergei.komarov.chatbot.server.services.UsersService;
-import ru.sergei.komarov.chatbot.server.utils.Converter;
+import ru.sergei.komarov.chatbot.be.models.User;
+import ru.sergei.komarov.chatbot.be.services.UsersService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -23,14 +20,14 @@ public class UsersController {
 
     @GetMapping("/get/all")
     @ResponseBody
-    public List<Map<String, Object>> getAll() {
-        return Converter.usersToMap(usersService.getAll());
+    public List<User> getAll() {
+        return usersService.getAll();
     }
 
     @PostMapping("/validate/credentials")
     @ResponseBody
-    public JsonPrimitive validateCredentials(String login, String password) {
-        return new JsonPrimitive(usersService.validateCredentials(login, password));
+    public boolean validateCredentials(String login, String password) {
+        return usersService.validateCredentials(login, password);
     }
 
     @PostMapping("/delete/all")

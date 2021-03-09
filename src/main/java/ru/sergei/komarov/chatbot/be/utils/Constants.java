@@ -1,4 +1,4 @@
-package ru.sergei.komarov.chatbot.server.utils;
+package ru.sergei.komarov.chatbot.be.utils;
 
 import java.time.format.DateTimeFormatter;
 

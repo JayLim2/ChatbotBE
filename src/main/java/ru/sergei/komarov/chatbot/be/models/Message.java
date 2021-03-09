@@ -1,21 +1,32 @@
-package ru.sergei.komarov.chatbot.server.models;
+package ru.sergei.komarov.chatbot.be.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "messages")
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "message_id_seq")
     private int id;
+
     private String message;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
+
     private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Advice> advices;
 
     public Message() {
     }
@@ -52,29 +63,13 @@ public class Message {
         this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", message='" + message + '\'' +
-                ", user=" + user +
-                ", date=" + date +
-                '}';
+    public Chat getChat() {
+        return chat;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Message message1 = (Message) o;
-        return id == message1.id &&
-                Objects.equals(message, message1.message) &&
-                Objects.equals(user, message1.user) &&
-                Objects.equals(date, message1.date);
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, message, user, date);
-    }
+
 }

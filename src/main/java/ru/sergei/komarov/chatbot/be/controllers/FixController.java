@@ -1,19 +1,14 @@
-package ru.sergei.komarov.chatbot.server.controllers;
+package ru.sergei.komarov.chatbot.be.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sergei.komarov.chatbot.server.models.Message;
-import ru.sergei.komarov.chatbot.server.models.User;
-import ru.sergei.komarov.chatbot.server.services.MessagesService;
-import ru.sergei.komarov.chatbot.server.services.UsersService;
-import ru.sergei.komarov.chatbot.server.utils.HashTool;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import ru.sergei.komarov.chatbot.be.models.User;
+import ru.sergei.komarov.chatbot.be.services.MessagesService;
+import ru.sergei.komarov.chatbot.be.services.UsersService;
+import ru.sergei.komarov.chatbot.be.utils.HashTool;
 
 @RestController
 @RequestMapping("/fix")
@@ -37,17 +32,17 @@ public class FixController {
 
         User user = new User();
         user.setLogin("USER");
-        user.setPassword(HashTool.hash("password"));
+        user.setPasswordHash(HashTool.hash("password"));
         usersService.save(user);
 
         user = new User();
         user.setLogin("SYSTEM");
-        user.setPassword(HashTool.hash("password"));
+        user.setPasswordHash(HashTool.hash("password"));
         usersService.save(user);
 
         user = new User();
         user.setLogin("Q");
-        user.setPassword(HashTool.hash("q"));
+        user.setPasswordHash(HashTool.hash("q"));
         usersService.save(user);
 
         return "Created.";
