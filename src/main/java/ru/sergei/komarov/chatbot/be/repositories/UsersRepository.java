@@ -7,10 +7,9 @@ import ru.sergei.komarov.chatbot.be.models.User;
 import java.util.List;
 
 @Component
-public interface UsersRepository extends CrudRepository<User, String> {
+public interface UsersRepository extends CrudRepository<User, Integer> {
     List<User> findAll();
     User findByLogin(String login);
     void deleteByLogin(String login);
-    User findByLoginAndPasswordHash(String login, String hashedPassword);
     boolean existsByLoginAndPasswordHash(String login, String hashedPassword);
 }

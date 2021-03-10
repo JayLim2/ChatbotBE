@@ -9,9 +9,9 @@ import java.util.List;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "message_id_seq")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_id_seq")
+    @SequenceGenerator(name = "message_id_seq", allocationSize = 1)
+    private Integer id;
 
     private String message;
 

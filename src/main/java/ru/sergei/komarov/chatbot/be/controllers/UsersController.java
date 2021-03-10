@@ -18,6 +18,12 @@ public class UsersController {
         this.usersService = usersService;
     }
 
+    @GetMapping("/get")
+    @ResponseBody
+    public User getUser(Integer id) {
+        return usersService.getById(id);
+    }
+
     @GetMapping("/get/all")
     @ResponseBody
     public List<User> getAll() {

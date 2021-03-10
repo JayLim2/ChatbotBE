@@ -1,7 +1,11 @@
 package ru.sergei.komarov.chatbot.be.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.sergei.komarov.chatbot.be.exceptions.DataNotFoundException;
 import ru.sergei.komarov.chatbot.be.models.User;
 import ru.sergei.komarov.chatbot.be.repositories.UsersRepository;
 import ru.sergei.komarov.chatbot.be.utils.HashTool;
@@ -9,7 +13,7 @@ import ru.sergei.komarov.chatbot.be.utils.HashTool;
 import java.util.List;
 
 @Service
-public class UsersService {
+public class UsersService implements BasicDataService<User, Integer>, UserDetailsService {
 
     private final UsersRepository usersRepository;
 
@@ -18,36 +22,55 @@ public class UsersService {
         this.usersRepository = usersRepository;
     }
 
+    @Override
+    public User getById(Integer id) {
+        return usersRepository.findById(id).orElseThrow(
+                () -> new DataNotFoundException("User with id = " + id + " doesn't exists.")
+        );
+    }
+
+    @Override
     public List<User> getAll() {
         return usersRepository.findAll();
     }
 
-    public User getByLogin(String login) {
-        return usersRepository.findByLogin(login);
-    }
-
+    @Override
     public User save(User user) {
         return usersRepository.save(user);
     }
 
-    public Iterable<User> saveAll(Iterable<User> users) {
-        return usersRepository.saveAll(users);
+    @Override
+    public List<User> saveList(List<User> items) {
+        return (List<User>)usersRepository.saveAll(items);
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        usersRepository.deleteById(id);
+    }
+
+    @Override
     public void delete(User user) {
         usersRepository.delete(user);
     }
 
-    public void deleteByLogin(String login) {
-        usersRepository.deleteByLogin(login);
+    @Override
+    public void deleteList(List<User> items) {
+        usersRepository.deleteAll(items);
     }
 
+    @Override
     public void deleteAll() {
         usersRepository.deleteAll();
     }
 
-    public void deleteAll(Iterable<User> users) {
-        usersRepository.deleteAll(users);
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        return usersRepository.findByLogin(login);
+    }
+
+    public void deleteByLogin(String login) {
+        usersRepository.deleteByLogin(login);
     }
 
     public boolean validateCredentials(String login, String password) {

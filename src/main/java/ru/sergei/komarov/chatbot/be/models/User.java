@@ -1,17 +1,21 @@
 package ru.sergei.komarov.chatbot.be.models;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
     @SequenceGenerator(name = "user_id_seq")
-    private int id;
+    private Integer id;
 
     @Column(unique = true)
     private String login;
@@ -23,6 +27,10 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Chat> chats;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public User() {
     }
@@ -68,28 +76,46 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(passwordHash, user.passwordHash) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(chats, user.chats);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, login, passwordHash, email, chats);
-    }
-
-    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(role);
+    }
+
+    @Override
+    public String getPassword() {
+        return passwordHash;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 }

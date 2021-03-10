@@ -10,7 +10,7 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_id_seq")
     @SequenceGenerator(name = "chat_id_seq", allocationSize = 1)
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")

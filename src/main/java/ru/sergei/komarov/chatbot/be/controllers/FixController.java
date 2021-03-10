@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sergei.komarov.chatbot.be.models.User;
-import ru.sergei.komarov.chatbot.be.services.MessagesService;
+import ru.sergei.komarov.chatbot.be.services.MessageService;
 import ru.sergei.komarov.chatbot.be.services.UsersService;
 import ru.sergei.komarov.chatbot.be.utils.HashTool;
 
@@ -14,12 +14,12 @@ import ru.sergei.komarov.chatbot.be.utils.HashTool;
 @RequestMapping("/fix")
 public class FixController {
 
-    private final MessagesService messagesService;
+    private final MessageService messageService;
     private final UsersService usersService;
 
     @Autowired
-    public FixController(MessagesService messagesService, UsersService usersService) {
-        this.messagesService = messagesService;
+    public FixController(MessageService messageService, UsersService usersService) {
+        this.messageService = messageService;
         this.usersService = usersService;
     }
 
@@ -27,7 +27,7 @@ public class FixController {
     @ResponseBody
     public String init() {
 
-        messagesService.deleteAll();
+        messageService.deleteAll();
         usersService.deleteAll();
 
         User user = new User();
