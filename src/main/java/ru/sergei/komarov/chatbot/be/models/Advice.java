@@ -9,22 +9,22 @@ public class Advice {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "advice_id_seq")
     @SequenceGenerator(name = "advice_id_seq", allocationSize = 1)
-    private Integer id;
+    private int id;
 
-    @Column(name = "advice_type")
+    @Column(name = "advice_type", nullable = false)
     private AdviceType adviceType;
 
     @Column(name = "mistake_type")
     private MistakeType mistakeType;
 
     @ManyToOne
-    @JoinColumn(name = "message_id")
+    @JoinColumn(name = "message_id", nullable = false)
     private Message message;
 
-    @Column(name = "start")
+    @Column(name = "start_position")
     private int startPosition;
 
-    @Column(name = "end")
+    @Column(name = "end_position")
     private int endPosition;
 
     public int getId() {

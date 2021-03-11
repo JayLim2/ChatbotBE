@@ -11,21 +11,23 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_id_seq")
     @SequenceGenerator(name = "message_id_seq", allocationSize = 1)
-    private Integer id;
+    private int id;
 
+    @Column(nullable = false)
     private String message;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(nullable = false)
     private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name = "chat_id")
+    @JoinColumn(name = "chat_id", nullable = false)
     private Chat chat;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "message")
     private List<Advice> advices;
 
     public Message() {
@@ -71,5 +73,11 @@ public class Message {
         this.chat = chat;
     }
 
+    public List<Advice> getAdvices() {
+        return advices;
+    }
 
+    public void setAdvices(List<Advice> advices) {
+        this.advices = advices;
+    }
 }

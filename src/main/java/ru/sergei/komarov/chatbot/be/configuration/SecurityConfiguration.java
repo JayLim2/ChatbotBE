@@ -10,14 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ru.sergei.komarov.chatbot.be.services.UsersService;
+import ru.sergei.komarov.chatbot.be.services.UserService;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
-    private final UsersService userService;
+    private final UserService userService;
 
-    public SecurityConfiguration(UsersService userService) {
+    public SecurityConfiguration(UserService userService) {
         this.userService = userService;
     }
 
@@ -42,13 +42,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                         "/login",
                         "/logout",
                         "/resources/**",
-                        "/init/**",
-                        "/api/hc/getVersion",
-                        "/api/users/get*"
+                        "/fix/init/**",
+                        "/api/hc/version"
                 ).permitAll()
                 .antMatchers(
                         "/api/chat/**",
-                        "/api/message/**"
+                        "/api/message/**",
+                        "/api/user/get*"
                 ).hasAnyAuthority("STUDENT", "ADMIN")
                 .antMatchers(
                         "/api/**",

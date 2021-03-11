@@ -15,17 +15,18 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
     @SequenceGenerator(name = "user_id_seq")
-    private Integer id;
+    private int id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String login;
 
+    @Column(nullable = false)
     private String passwordHash;
 
     @Column(unique = true)
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
     private List<Chat> chats;
 
     @Column(nullable = false)
@@ -75,11 +76,20 @@ public class User implements UserDetails {
         this.chats = chats;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
+                ", password hash='" + passwordHash + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
@@ -101,21 +111,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

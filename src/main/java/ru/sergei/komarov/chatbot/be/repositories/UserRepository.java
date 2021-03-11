@@ -7,7 +7,7 @@ import ru.sergei.komarov.chatbot.be.models.User;
 import java.util.List;
 
 @Component
-public interface UsersRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
     List<User> findAll();
     User findByLogin(String login);
     void deleteByLogin(String login);

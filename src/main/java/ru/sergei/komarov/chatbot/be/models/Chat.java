@@ -10,13 +10,13 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_id_seq")
     @SequenceGenerator(name = "chat_id_seq", allocationSize = 1)
-    private Integer id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
     private List<Message> messages;
 
     public int getId() {

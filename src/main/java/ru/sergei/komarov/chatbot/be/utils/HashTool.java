@@ -1,26 +1,24 @@
 package ru.sergei.komarov.chatbot.be.utils;
 
-import java.util.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HashTool {
 
-    private static Base64.Encoder base64Encoder;
-    private static Base64.Decoder base64Decoder;
+    private final BCryptPasswordEncoder encoder;
 
-    static {
-        base64Encoder = Base64.getEncoder();
-        base64Decoder = Base64.getDecoder();
+    @Autowired
+    public HashTool(BCryptPasswordEncoder encoder) {
+        this.encoder = encoder;
     }
 
-    public static String hash(String value) {
-        return base64Encoder.encodeToString(value.getBytes());
+    public String hash(String value) {
+        return encoder.encode(value);
     }
 
-    public static String unhash(String hashedValue) {
-        return new String(base64Decoder.decode(hashedValue.getBytes()));
-    }
-
-    public static boolean isNullOrEmptyString(String string) {
+    public boolean isNullOrEmptyString(String string) {
         return string == null || string.trim().isEmpty();
     }
 }

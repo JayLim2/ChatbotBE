@@ -4,25 +4,25 @@ import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.chatbot.be.integrations.AIIntegrationService;
 import ru.sergei.komarov.chatbot.be.models.Message;
 import ru.sergei.komarov.chatbot.be.services.MessageService;
-import ru.sergei.komarov.chatbot.be.services.UsersService;
+import ru.sergei.komarov.chatbot.be.services.UserService;
 
 import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/message")
-public class MessagesController {
+public class MessageController {
 
     private final MessageService messageService;
-    private final UsersService usersService;
+    private final UserService userService;
     private final AIIntegrationService aiIntegrationService;
 
-    public MessagesController(MessageService messageService,
-                              UsersService usersService,
-                              AIIntegrationService aiIntegrationService) {
+    public MessageController(MessageService messageService,
+                             UserService userService,
+                             AIIntegrationService aiIntegrationService) {
 
         this.messageService = messageService;
-        this.usersService = usersService;
+        this.userService = userService;
         this.aiIntegrationService = aiIntegrationService;
     }
 
