@@ -1,5 +1,6 @@
 package ru.sergei.komarov.chatbot.be.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -27,6 +28,7 @@ public class User implements UserDetails {
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
+    @JsonIgnore
     private List<Chat> chats;
 
     @Column(nullable = false)

@@ -10,6 +10,7 @@ import ru.sergei.komarov.chatbot.be.models.User;
 import ru.sergei.komarov.chatbot.be.services.ChatService;
 import ru.sergei.komarov.chatbot.be.services.MessageService;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -33,6 +34,11 @@ public class ChatController {
             for (Chat chat : chats) {
                 System.out.printf("Chat #%d, messages count: %d", chat.getId(), chat.getMessages().size());
             }
+        } else {
+            Chat chat = new Chat();
+            chat.setOwner(currentUser);
+            chatService.save(chat);
+            chats = Collections.singletonList(chat);
         }
         return chats;
     }
