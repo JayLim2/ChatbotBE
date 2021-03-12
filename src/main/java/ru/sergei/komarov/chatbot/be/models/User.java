@@ -15,7 +15,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
-    @SequenceGenerator(name = "user_id_seq")
+    @SequenceGenerator(name = "user_id_seq", allocationSize = 1)
     private int id;
 
     @Column(unique = true, nullable = false)
@@ -27,7 +27,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     @JsonIgnore
     private List<Chat> chats;
 

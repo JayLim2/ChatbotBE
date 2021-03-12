@@ -1,11 +1,14 @@
 package ru.sergei.komarov.chatbot.be.controllers;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.chatbot.be.integrations.AIIntegrationService;
+import ru.sergei.komarov.chatbot.be.models.Chat;
 import ru.sergei.komarov.chatbot.be.models.Message;
 import ru.sergei.komarov.chatbot.be.services.MessageService;
 import ru.sergei.komarov.chatbot.be.services.UserService;
 
+import javax.xml.ws.ResponseWrapper;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +33,11 @@ public class MessageController {
     @ResponseBody
     public List<Message> getAll() {
         return messageService.getAll();
+    }
+
+    @PostMapping(value = "/get/chat")
+    public List<Message> getByChatId(@RequestBody Chat chat) {
+        return messageService.getByChat(chat);
     }
 
     @PostMapping("/save")

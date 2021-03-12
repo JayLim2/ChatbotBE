@@ -1,5 +1,8 @@
 package ru.sergei.komarov.chatbot.be.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,18 +19,20 @@ public class Message {
     @Column(nullable = false)
     private String message;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(nullable = false)
-    private LocalDateTime date;
+    @Column(name = "date_time", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
+    private LocalDateTime dateTime;
 
     @ManyToOne
     @JoinColumn(name = "chat_id", nullable = false)
+    @JsonIgnoreProperties({"messages"})
     private Chat chat;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "message")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "message")
     private List<Advice> advices;
 
     public Message() {
@@ -57,12 +62,12 @@ public class Message {
         this.user = user;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     public Chat getChat() {
