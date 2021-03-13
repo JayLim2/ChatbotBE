@@ -74,4 +74,10 @@ public class UserService implements BasicDataService<User, Integer>, UserDetails
         userRepository.deleteByLogin(login);
     }
 
+    public boolean isAlreadyRegistered(User user) {
+        return userRepository.existsByLoginIgnoreCaseOrEmailIgnoreCase(
+                user.getLogin(), user.getEmail()
+        );
+    }
+
 }

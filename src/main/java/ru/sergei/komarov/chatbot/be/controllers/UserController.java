@@ -1,6 +1,6 @@
 package ru.sergei.komarov.chatbot.be.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.sergei.komarov.chatbot.be.models.User;
 import ru.sergei.komarov.chatbot.be.services.UserService;
@@ -13,10 +13,13 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService,
+                          BCryptPasswordEncoder passwordEncoder) {
+
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/get")
@@ -31,6 +34,16 @@ public class UserController {
     @GetMapping("/get/all")
     public List<User> getAll() {
         return userService.getAll();
+    }
+
+    @PutMapping("/register")
+    public User register(@RequestBody User user) {
+        boolean isAlreadyRegistered = userService.isAlreadyRegistered(user);
+        if (!isAlreadyRegistered) {
+            user.setPasswordHash(passwordEncoder.encode(user.getPassword()));
+            return userService.save(user);
+        }
+        return new User();
     }
 
     @PostMapping("/delete/all")

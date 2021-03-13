@@ -12,4 +12,5 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     User findByLogin(String login);
     void deleteByLogin(String login);
     boolean existsByLoginAndPasswordHash(String login, String hashedPassword);
+    boolean existsByLoginIgnoreCaseOrEmailIgnoreCase(String login, String email);
 }
