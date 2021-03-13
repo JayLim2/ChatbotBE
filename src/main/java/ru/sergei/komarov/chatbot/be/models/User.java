@@ -1,6 +1,8 @@
 package ru.sergei.komarov.chatbot.be.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class User implements UserDetails {
 
     @Id
@@ -34,6 +37,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne(mappedBy = "owner")
+    @JoinColumn(name = "config_id")
+    private ProfileConfiguration configuration;
 
     public User() {
     }
@@ -84,6 +91,14 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public ProfileConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(ProfileConfiguration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
