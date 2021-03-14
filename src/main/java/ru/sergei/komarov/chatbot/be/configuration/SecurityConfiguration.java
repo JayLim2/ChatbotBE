@@ -44,7 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                         "/resources/**",
                         "/fix/init/**",
                         "/api/hc/version",
-                        "/api/user/register"
+                        "/api/user/register",
+                        "/api/topic/**"
                 ).permitAll()
                 .antMatchers(
                         "/api/chat/**",

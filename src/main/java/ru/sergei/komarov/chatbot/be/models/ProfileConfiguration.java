@@ -1,5 +1,6 @@
 package ru.sergei.komarov.chatbot.be.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.hibernate.annotations.Type;
 
@@ -15,7 +16,12 @@ public class ProfileConfiguration {
     @SequenceGenerator(name = "profile_config_id_seq")
     private int id;
 
-    @OneToMany(mappedBy = "configuration")
+    @ManyToMany
+    @JoinTable(
+            name = "config_topic_mappings",
+            joinColumns = @JoinColumn(name = "config_id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_id")
+    )
     private List<Topic> preferredTopics;
 
     @Column(name = "lang_skills_config")
@@ -24,6 +30,7 @@ public class ProfileConfiguration {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User owner;
 
     public int getId() {
@@ -57,4 +64,5 @@ public class ProfileConfiguration {
     public void setOwner(User owner) {
         this.owner = owner;
     }
+
 }

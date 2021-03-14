@@ -3,6 +3,7 @@ package ru.sergei.komarov.chatbot.be.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "topics")
@@ -15,10 +16,14 @@ public class Topic {
 
     private String name;
 
-    //FIXME many-to-many!
-    @ManyToOne
+    @ManyToMany
+    @JoinTable(
+            name = "config_topic_mappings",
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "config_id")
+    )
     @JsonIgnore
-    private ProfileConfiguration configuration;
+    private List<ProfileConfiguration> configuration;
 
     public int getId() {
         return id;
@@ -36,11 +41,11 @@ public class Topic {
         this.name = name;
     }
 
-    public ProfileConfiguration getConfiguration() {
+    public List<ProfileConfiguration> getConfiguration() {
         return configuration;
     }
 
-    public void setConfiguration(ProfileConfiguration configuration) {
+    public void setConfiguration(List<ProfileConfiguration> configuration) {
         this.configuration = configuration;
     }
 }
