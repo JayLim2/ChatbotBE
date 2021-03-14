@@ -45,12 +45,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
                         "/fix/init/**",
                         "/api/hc/version",
                         "/api/user/register",
-                        "/api/topic/**"
+                        "/api/topic/**",
+                        "/api/config/get/**"
                 ).permitAll()
                 .antMatchers(
                         "/api/chat/**",
                         "/api/message/**",
-                        "/api/user/get*"
+                        "/api/user/get*",
+                        "/api/user/logout",
+                        "/api/config/save"
                 ).hasAnyAuthority("STUDENT", "ADMIN")
                 .antMatchers(
                         "/api/**",

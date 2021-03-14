@@ -3,6 +3,7 @@ package ru.sergei.komarov.chatbot.be.controllers;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sergei.komarov.chatbot.be.models.Chat;
@@ -10,6 +11,7 @@ import ru.sergei.komarov.chatbot.be.models.User;
 import ru.sergei.komarov.chatbot.be.services.ChatService;
 import ru.sergei.komarov.chatbot.be.services.MessageService;
 
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 

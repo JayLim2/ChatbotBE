@@ -1,5 +1,7 @@
 package ru.sergei.komarov.chatbot.be.models;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class Chat {
     private User owner;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Message> messages;
 
     public int getId() {

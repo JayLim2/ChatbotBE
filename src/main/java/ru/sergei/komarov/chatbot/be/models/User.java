@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class User implements UserDetails {
 
     @Id
