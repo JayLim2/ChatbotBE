@@ -20,6 +20,8 @@ public class Chat {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @ElementCollection
+    @OrderBy("id ASC")
     private List<Message> messages;
 
     public int getId() {

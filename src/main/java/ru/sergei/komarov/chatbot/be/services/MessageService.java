@@ -62,7 +62,7 @@ public class MessageService implements BasicDataService<Message, Integer> {
     }
 
     public List<Message> getByChat(Chat chat) {
-        return messagesRepository.findAllByChat(chat);
+        return messagesRepository.findAllByChatOrderByIdAsc(chat);
     }
 
     public void deleteAllByChat(Chat chat) {

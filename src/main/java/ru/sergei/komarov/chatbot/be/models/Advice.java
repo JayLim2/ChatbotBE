@@ -19,9 +19,11 @@ public class Advice {
     private int id;
 
     @Column(name = "advice_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private AdviceType adviceType;
 
     @Column(name = "mistake_type")
+    @Enumerated(EnumType.STRING)
     private MistakeType mistakeType;
 
     @ManyToOne

@@ -12,6 +12,6 @@ import java.util.List;
 @Component
 public interface  MessagesRepository extends CrudRepository<Message, Integer> {
     List<Message> findAll();
-    List<Message> findAllByChat(Chat chat);
+    List<Message> findAllByChatOrderByIdAsc(Chat chat);
     void deleteAllByChat(Chat chat);
 }
