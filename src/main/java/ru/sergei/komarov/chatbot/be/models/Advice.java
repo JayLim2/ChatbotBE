@@ -1,9 +1,16 @@
 package ru.sergei.komarov.chatbot.be.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "advices")
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Advice {
 
     @Id
@@ -19,6 +26,7 @@ public class Advice {
 
     @ManyToOne
     @JoinColumn(name = "message_id", nullable = false)
+    @JsonIgnoreProperties({"advices"})
     private Message message;
 
     @Column(name = "start_position")
@@ -26,6 +34,12 @@ public class Advice {
 
     @Column(name = "end_position")
     private int endPosition;
+
+    private String comment;
+
+    @Column(name = "custom_data", columnDefinition = "jsonb")
+    @Type(type = "jsonb")
+    private JsonNode customData;
 
     public int getId() {
         return id;
@@ -73,5 +87,21 @@ public class Advice {
 
     public void setEndPosition(int endPosition) {
         this.endPosition = endPosition;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public JsonNode getCustomData() {
+        return customData;
+    }
+
+    public void setCustomData(JsonNode customData) {
+        this.customData = customData;
     }
 }

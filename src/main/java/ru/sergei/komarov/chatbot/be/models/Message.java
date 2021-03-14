@@ -33,7 +33,7 @@ public class Message {
     @JsonIgnoreProperties({"messages"})
     private Chat chat;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "message")
+    @OneToMany(mappedBy = "message")
     private List<Advice> advices;
 
     public Message() {
